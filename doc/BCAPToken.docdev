@@ -1,0 +1,42 @@
+{
+   "methods" : {
+      "allowance(address,address)" : {
+         "params" : {
+            "_owner" : "address to get number of tokens allowed to be transferred\r       from the owner of\r",
+            "_spender" : "address to get number of tokens allowed to be transferred\r       by the owner of\r"
+         },
+         "return" : "number of tokens given spender is currently allowed to transfer\r        from given owner\r"
+      },
+      "approve(address,uint256)" : {
+         "params" : {
+            "_spender" : "address to allow the owner of to transfer tokens from\r message sender\r",
+            "_value" : "number of tokens to allow to transfer\r"
+         },
+         "return" : "true if token transfer was successfully approved, false otherwise\r"
+      },
+      "balanceOf(address)" : {
+         "params" : {
+            "_owner" : "address to get number of tokens currently belonging to the\r owner of\r"
+         },
+         "return" : "number of tokens currently belonging to the owner of given address\r"
+      },
+      "totalSupply()" : {
+         "return" : "total number of tokens in circulation\r"
+      },
+      "transfer(address,uint256)" : {
+         "params" : {
+            "_to" : "address to transfer tokens to the owner of",
+            "_value" : "number of tokens to transfer to the owner of given address"
+         },
+         "return" : "true if tokens were transferred successfully, false otherwise"
+      },
+      "transferFrom(address,address,uint256)" : {
+         "params" : {
+            "_from" : "address to transfer tokens from the owner of",
+            "_to" : "address to transfer tokens to the owner of",
+            "_value" : "number of tokens to transfer from given owner to given recipient"
+         },
+         "return" : "true if tokens were transferred successfully, false otherwise"
+      }
+   }
+}
