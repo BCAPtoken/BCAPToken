@@ -1,0 +1,11 @@
+# Geth command
+geth: geth
+
+# Solc command
+solc: solc
+
+# Command-line arguments to be passed to geth when deploying contract
+geth.deploy.args: --dev --datadir data --unlock 0 --password password --mine
+
+# Command-line arguments to be passed to geth when running tests
+geth.test.args: --ipcdisable --port 30304

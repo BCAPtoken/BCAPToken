@@ -1,0 +1,227 @@
+<!--
+  Build file for Blockchain Capital Token Smart Contract.
+  Copyright © 2017 by ABDK Consulting.
+  -->
+<project name="blockchain-capital-token-smart-contract"
+         default="build">
+  <property file="build.properties" />
+
+  <!-- Source directories -->
+  <property name="source.dir" location="src" />
+  <property name="sol.source.dir" location="${source.dir}/sol" />
+  <property name="js.source.dir" location="${source.dir}/js" />
+  <property name="test.source.dir" location="src-test" />
+  <property name="sol.test.source.dir" location="${test.source.dir}/sol" />
+  <property name="js.test.source.dir" location="${test.source.dir}/js" />
+  <property name="common.js.test.source.dir"
+            location="${test.source.dir}/common-js" />
+
+  <!-- Docs directories -->
+  <property name="docs.dir" location="xdocs" />
+
+  <!-- Target directories -->
+  <property name="target.dir" location="target" />
+  <property name="solc.target.dir" location="${target.dir}/solc" />
+  <property name="js.deploy.target.dir" location="${target.dir}/deploy-js" />
+  <property name="solc.test.target.dir" location="${target.dir}/test-solc" />
+  <property name="js.solc.test.target.dir"
+            location="${target.dir}/test-solc-js" />
+
+  <!-- Geth data directories -->
+  <property name="data.dir" location="data" />
+
+  <!-- Name of the main contract -->
+  <property name="contract.name" value="BCAPToken" />
+
+  <!-- Targets -->
+  <target name="build" description="Build smart contract">
+    <mkdir dir="${solc.target.dir}" />
+
+    <pathconvert pathsep="' '" property="sources">
+      <fileset dir="${sol.source.dir}">
+        <include name="*.sol" />
+      </fileset>
+    </pathconvert>
+
+    <exec executable="${solc}"
+          dir="${basedir}"
+          failonerror="true">
+      <arg value="--optimize" />
+      <arg value="--output-dir" />
+      <arg file="${solc.target.dir}" />
+      <arg value="--bin" />
+      <arg value="--abi" />
+      <arg value="--userdoc" />
+      <arg value="--devdoc" />
+      <arg line="'${sources}'" />
+    </exec>
+  </target>
+
+  <target name="build-test" description="Build smart contract tests">
+    <mkdir dir="${solc.test.target.dir}" />
+
+    <pathconvert pathsep="' '" property="sources">
+      <fileset dir="${sol.source.dir}">
+        <include name="*.sol" />
+      </fileset>
+    </pathconvert>
+
+    <pathconvert pathsep="' '" property="test.sources">
+      <fileset dir="${sol.test.source.dir}">
+        <include name="*.sol" />
+        </fileset>
+    </pathconvert>
+
+    <exec executable="${solc}"
+          dir="${basedir}"
+          failonerror="true">
+      <arg value="--optimize" />
+      <arg value="--output-dir" />
+      <arg file="${solc.test.target.dir}" />
+      <arg value="--bin" />
+      <arg value="--abi" />
+      <arg line="'${sources}'" />
+      <arg line="'${test.sources}'" />
+    </exec>
+  </target>
+
+  <target name="build-test-js" depends="build-test">
+    <mkdir dir="${js.solc.test.target.dir}" />
+
+    <copy toDir="${js.solc.test.target.dir}">
+      <fileset dir="${solc.test.target.dir}">
+        <include name="*.bin" />
+      </fileset>
+      <mapper type="glob" from="*.bin" to="*.bin.js" />
+      <filterchain>
+        <prefixlines prefix="var _ = '0x" />
+        <suffixlines suffix="';" />
+      </filterchain>
+    </copy>
+
+    <copy toDir="${js.solc.test.target.dir}">
+      <fileset dir="${solc.test.target.dir}">
+        <include name="*.abi" />
+      </fileset>
+      <mapper type="glob" from="*.abi" to="*.abi.js" />
+      <filterchain>
+        <striplinebreaks />
+        <prefixlines prefix="var _ = " />
+        <suffixlines suffix=";" />
+      </filterchain>
+    </copy>
+  </target>
+
+  <target name="build-deploy"
+          depends="build"
+          description="Build deploy scripts">
+    <mkdir dir="${js.deploy.target.dir}" />
+
+    <loadfile property="bin"
+              srcFile="${solc.target.dir}/${contract.name}.bin" />
+    <loadfile property="abi"
+              srcFile="${solc.target.dir}/${contract.name}.abi" />
+
+    <copy todir="${js.deploy.target.dir}">
+      <fileset dir="${js.source.dir}">
+        <include name="**/*Deploy.js" />
+      </fileset>
+      <filterchain>
+        <replacetokens>
+          <token key="BIN" value="${bin}"/>
+          <token key="ABI" value="${abi}"/>
+        </replacetokens>
+      </filterchain>
+    </copy>
+  </target>
+
+  <target name="package"
+          depends="build,build-deploy"
+          description="Package smart contract">
+    <tstamp>
+      <format property="version" pattern="yyyy-MM-dd" />
+    </tstamp>
+
+    <zip destfile="${ant.project.name}-${version}.zip" encoding="UTF-8">
+      <zipfileset dir="${sol.source.dir}"
+                  prefix="${ant.project.name}-${version}/sol">
+        <include name="**/*.sol" />
+      </zipfileset>
+      <zipfileset dir="${solc.target.dir}"
+                  prefix="${ant.project.name}-${version}/bin">
+        <include name="${contract.name}.bin" />
+      </zipfileset>
+      <zipfileset dir="${solc.target.dir}"
+                  prefix="${ant.project.name}-${version}/abi">
+        <include name="${contract.name}.abi" />
+      </zipfileset>
+      <zipfileset dir="${docs.dir}" prefix="${ant.project.name}-${version}" />
+      <zipfileset dir="${solc.target.dir}"
+                  prefix="${ant.project.name}-${version}/doc">
+        <include name="${contract.name}.docuser" />
+      </zipfileset>
+      <zipfileset dir="${solc.target.dir}"
+                  prefix="${ant.project.name}-${version}/doc">
+        <include name="${contract.name}.docdev" />
+      </zipfileset>
+      <zipfileset dir="${js.deploy.target.dir}"
+                  prefix="${ant.project.name}-${version}">
+        <include name="**/*.js" />
+      </zipfileset>
+    </zip>
+  </target>
+
+  <target name="deploy"
+          depends="build-deploy"
+          description="Deploy smart contract">
+    <pathconvert pathsep="' '" property="deploy.scripts">
+      <fileset dir="${js.deploy.target.dir}">
+        <include name="**/*.js" />
+      </fileset>
+    </pathconvert>
+
+    <exec executable="${geth}">
+      <arg line="${geth.deploy.args}" />
+      <arg value="js" />
+      <arg line="'${deploy.scripts}'" />
+    </exec>
+  </target>
+
+  <target name="test" depends="build-test-js" description="Test smart contract">
+    <mkdir dir="${data.dir}" />
+
+    <pathconvert pathsep="' '" property="tests">
+      <fileset dir="${js.test.source.dir}">
+        <include name="*Test.js" />
+      </fileset>
+    </pathconvert>
+
+    <exec executable="${geth}">
+      <arg value="--dev" />
+      <arg value="--datadir" />
+      <arg file="${data.dir}" />
+      <arg line="${geth.test.args}" />
+      <arg value="--verbosity" />
+      <arg value="0" />
+      <arg value="js" />
+      <arg file="${common.js.test.source.dir}/TestCommons.js" />
+      <arg line="'${tests}'" />
+      <arg file="${common.js.test.source.dir}/TestRunner.js" />
+      <redirector outputproperty="output" alwayslog="true" />
+    </exec>
+
+    <condition property="success">
+      <contains string="${output}" substring="SUCCESS" />
+    </condition>
+
+    <fail unless="success" />
+  </target>
+
+  <target name="clean" description="Delete generated files">
+    <delete dir="${target.dir}" />
+  </target>
+
+  <target name="clean-data" description="Delete geth data dir">
+    <delete dir="${data.dir}" />
+  </target>
+</project>
