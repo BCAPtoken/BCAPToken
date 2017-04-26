@@ -3,15 +3,15 @@
 This document describes storage structure of Blockchain Capital Token Smart
 Contract.
 
-## 1. centralBank
+## 1. tokenIssuer
 
 ### Signature
 
-    address centralBank
+    address tokenIssuer
 
 ### Description
 
-Central bank address.
+Token issuer address.
 
 ### Read in use cases
 
@@ -30,7 +30,7 @@ Central bank address.
 
 ### Description
 
-If `owner` is not the central bank address, value of `accounts [owner]` is the number of tokens currently belonging to the owner of address `owner`.  If `owner` is central bank address, value of `accounts [owner]` is maximum allowed number of tokens in circulation minus number of tokens currently in circulation or in other words, the number of tokens that still may be issued.
+If `owner` is not the token issuer address, value of `accounts [owner]` is the number of tokens currently belonging to the owner of address `owner`.  If `owner` is token issuer address, value of `accounts [owner]` is maximum allowed number of tokens in circulation minus number of tokens currently in circulation or in other words, the number of tokens that still may be issued.
 
 ### Read in use cases
 
