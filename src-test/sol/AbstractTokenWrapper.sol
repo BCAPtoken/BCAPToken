@@ -13,14 +13,14 @@ contract AbstractTokenWrapper is AbstractToken {
   uint256 private initialSupply;
 
   /**
-   * Create new Abstract Token Wrapper smart contract with given "Central Bank"
+   * Create new Abstract Token Wrapper smart contract with given "token issuer"
    * account address.
    *
-   * @param _centralBank "Central Bank" account address
+   * @param _tokenIssuer "token issuer" account address
    */
-  function AbstractTokenWrapper (address _centralBank, uint256 _initialSupply)
+  function AbstractTokenWrapper (address _tokenIssuer, uint256 _initialSupply)
   AbstractToken () {
-    accounts[_centralBank] = _initialSupply;
+    accounts[_tokenIssuer] = _initialSupply;
     initialSupply = _initialSupply;
   }
 

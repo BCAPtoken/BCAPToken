@@ -74,7 +74,7 @@ tests.push ({
         test.dave = test.walletContract.at (
             web3.eth.getTransactionReceipt (test.tx3).contractAddress);
       }},
-    { name: "Alice deploys StandardTokenWrapper contract with Bob as Central Bank",
+    { name: "Alice deploys StandardTokenWrapper contract with Bob as token issuer",
       body: function (test) {
         loadScript ("target/test-solc-js/StandardTokenWrapper.abi.js");
         var standardTokenWrapperABI = _;

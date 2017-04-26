@@ -49,9 +49,9 @@ This functional block contains use cases required by [ERC-20](https://github.com
 
 1. *User* calls method on *Smart Contract* providing the following information as method parameters: address to transfer tokens to the owner of and number of tokens to transfer
 2. Token transfers are not currently frozen
-3. *User* is not central bank
+3. *User* is not token issuer
 4. There are enough tokens currently belonging to *User*
-5. Destination address is not central bank address
+5. Destination address is not token issuer address
 6. *Smart Contract* transfers requested number of tokens from *User* to the owner of given address
 7. Some tokens actually did change hands during the transfer, i.e. destination address was not the same as *User*'s own address and number of tokens transferred is greater than zero
 8. *Smart Contract* logs tokens transfer event with the following information: address tokens were transferred from the owner of, address tokens were transferred to the owner of, and number of tokens transferred
@@ -67,13 +67,13 @@ This functional block contains use cases required by [ERC-20](https://github.com
 
 1. Same as in Main Flow
 2. Same as in Main Flow
-3. *User* is central bank
+3. *User* is token issuer
 4. Number of tokens currently in circulation plus number of tokens to transfer is not greater than maximum allowed number of tokens in circulation
-5. Destination address in not central bank address
+5. Destination address in not token issuer address
 6. *Smart Contract* creates as many new tokens as many tokens are to be transferred
 7. *Smart Contract* transfers newly created tokens to the owner of given address
 8. Some tokens were actually created, i.e. number of tokens created is greater than zero
-9. *Smart Contract* logs tokens transfer event with the following information: central bank address as source address, address tokens were transferred to the owner of, and number of tokens transferred
+9. *Smart Contract* logs tokens transfer event with the following information: token issuer address as source address, address tokens were transferred to the owner of, and number of tokens transferred
 10. *Smart Contract* returns success indicator to *User*
 
 ##### Exceptional Flow #3:
@@ -90,7 +90,7 @@ This functional block contains use cases required by [ERC-20](https://github.com
 2. Same as in Main Flow
 3. Same as in Exceptional Flow #2
 4. Same as in Exceptional Flow #2
-5. Destination address in central bank address
+5. Destination address in token issuer address
 6. *Smart Contract* returns success indicator to *User*
 
 ##### Exceptional Flow #5:
@@ -119,10 +119,10 @@ This functional block contains use cases required by [ERC-20](https://github.com
 2. Same as in Main Flow
 3. Same as in Main Flow
 4. Same as in Main Flow
-5. Destination address is central bank address
+5. Destination address is token issuer address
 6. *Smart Contract* destroys as many tokens belonging to *User* as many tokens are to be transferred
 7. Some tokens actually were destroyed, i.e. number of tokens destroyed is greater than zero
-8. *Smart Contract* logs tokens transfer event with the following information: *User* address as source address, central bank address as destination address, and number of tokens destroyed
+8. *Smart Contract* logs tokens transfer event with the following information: *User* address as source address, token issuer address as destination address, and number of tokens destroyed
 9. *Smart Contract* returns success indicator to *User*
 
 ##### Exceptional Flow #8:
@@ -158,9 +158,9 @@ This functional block contains use cases required by [ERC-20](https://github.com
 1. *User* calls method on *Smart Contract* providing the following information as method parameters: source address, destination address, and number of tokens to transfer
 2. Token transfers are not currently frozen
 3. *User* is currently allowed to transfer requested number of tokens from the owner of source address
-4. Source address is not central bank address
+4. Source address is not token issuer address
 5. There are enough tokens currently belonging to the owner of source address
-6. Destination address is not central bank address
+6. Destination address is not token issuer address
 7. *Smart Contract* transfers requested number of tokens from the owner of source address to the owner of destination address
 8. *Smart Contract* decreases by the number of tokens transferred the number of tokens *User* is allowed to transfer from the owner of source address
 9. Some tokens actually did change hands during the transfer, i.e. destination address was not the same as source address and number of tokens transferred was greater than zero
@@ -185,9 +185,9 @@ This functional block contains use cases required by [ERC-20](https://github.com
 1. Same as in Main Flow
 2. Same as in Main Flow
 3. Same as in Main Flow
-4. Source address is central bank address
+4. Source address is token issuer address
 5. Number of tokens currently in circulation plus number of tokens to transfer is not greater than maximum allowed number of tokens in circulation
-6. Destination address is not central bank address
+6. Destination address is not token issuer address
 7. *Smart Contract* creates as many new tokens as many tokens are to be transferred
 8. *Smart Contract* transfers newly created tokens to the owner of given address
 9. *Smart Contract* decreases by the number of tokens created the number of tokens *User* is allowed to transfer from the owner of source address
@@ -211,7 +211,7 @@ This functional block contains use cases required by [ERC-20](https://github.com
 3. Same as in Main Flow
 4. Same as in Exceptional Flow #3
 5. Same as in Exceptional Flow #3
-6. Destination address is central bank address
+6. Destination address is token issuer address
 7. *Smart Contract* returns success indicator to *User*
 
 ##### Exceptional Flow #6:
@@ -244,7 +244,7 @@ This functional block contains use cases required by [ERC-20](https://github.com
 3. Same as in Main Flow
 4. Same as in Main Flow
 5. Same as in Main Flow
-6. Destination address is central bank address
+6. Destination address is token issuer address
 7. *Smart Contract* destroys as many tokens belonging to *User* as many tokens are to be transferred
 8. *Smart Contract* decreases by the number of tokens destroyed the number of tokens *User* is allowed to transfer from the owner of source address
 9. Some tokens actually were destroyed, i.e. number of tokens destroyed is greater than zero
@@ -309,12 +309,12 @@ This functional block contains use cases related to smart contract administratio
 
 **Actors**: *User*, *Smart Contract*
 
-**Goal**: *User* wants to deploy *Smart Contract* with certain central bank address
+**Goal**: *User* wants to deploy *Smart Contract* with certain token issuer address
 
 ##### Main Flow:
 
-1. *User* deploys *Smart Contract* providing the following information as constructor arguments: central bank address
-2. *Smart Contract* remember given central bank address
+1. *User* deploys *Smart Contract* providing the following information as constructor arguments: token issuer address
+2. *Smart Contract* remember given token issuer address
 
 #### 1.2.2. Administration:Freeze
 

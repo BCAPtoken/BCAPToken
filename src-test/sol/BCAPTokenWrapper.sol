@@ -11,13 +11,13 @@ import "./../../src/sol/BCAPToken.sol";
  */
 contract BCAPTokenWrapper is BCAPToken {
   /**
-   * Create new Standard Token Wrapper smart contract with given "Central Bank"
-   * account address.
+   * Create new Blockchain Token Wrapper smart contract with given 
+   * "token issuer" account address.
    *
-   * @param _centralBank "Central Bank" account address
+   * @param _tokenIssuer "token issuer" account address
    */
-  function BCAPTokenWrapper (address _centralBank)
-  BCAPToken (_centralBank) {
+  function BCAPTokenWrapper (address _tokenIssuer)
+  BCAPToken (_tokenIssuer) {
     // Do nothing
   }
 

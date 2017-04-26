@@ -11,14 +11,14 @@ import "./StandardToken.sol";
  */
 contract BCAPToken is StandardToken {
   /**
-   * Create new Blockchain Capital Token contract with given central bank
+   * Create new Blockchain Capital Token contract with given token issuer
    * address.
    *
-   * @param _centralBank address of central bank
+   * @param _tokenIssuer address of token issuer
    */
-  function BCAPToken (address _centralBank)
-    StandardToken (_centralBank) {
-    owner = _centralBank;
+  function BCAPToken (address _tokenIssuer)
+    StandardToken (_tokenIssuer) {
+    owner = _tokenIssuer;
   }
 
   /**

@@ -7,20 +7,20 @@ import "./AbstractToken.sol";
 
 /**
  * Standard Token Smart Contract that implements ERC-20 token with special
- * unlimited supply "Central Bank" account.
+ * unlimited supply "token issuer" account.
  */
 contract StandardToken is AbstractToken {
   uint256 constant private MAX_UINT256 =
     0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF;
 
   /**
-   * Create new Standard Token contract with given "Central Bank" account.
+   * Create new Standard Token contract with given "token issuer" account.
    *
-   * @param _centralBank address of "Central Bank" account
+   * @param _tokenIssuer address of "token issuer" account
    */
-  function StandardToken (address _centralBank) AbstractToken () {
-    centralBank = _centralBank;
-    accounts [_centralBank] = MAX_UINT256;
+  function StandardToken (address _tokenIssuer) AbstractToken () {
+    tokenIssuer = _tokenIssuer;
+    accounts [_tokenIssuer] = MAX_UINT256;
   }
 
   /**
@@ -29,7 +29,7 @@ contract StandardToken is AbstractToken {
    * @return total number of tokens in circulation
    */
   function totalSupply () constant returns (uint256 supply) {
-    return safeSub (MAX_UINT256, accounts [centralBank]);
+    return safeSub (MAX_UINT256, accounts [tokenIssuer]);
   }
 
   /**
@@ -40,11 +40,11 @@ contract StandardToken is AbstractToken {
    * @return number of tokens currently belonging to the owner of given address
    */
   function balanceOf (address _owner) constant returns (uint256 balance) {
-    return _owner == centralBank ? 0 : AbstractToken.balanceOf (_owner);
+    return _owner == tokenIssuer ? 0 : AbstractToken.balanceOf (_owner);
   }
 
   /**
-   * Address of "Central Bank" account.
+   * Address of "token issuer" account.
    */
-  address private centralBank;
+  address private tokenIssuer;
 }

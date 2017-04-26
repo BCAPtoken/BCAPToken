@@ -11,13 +11,13 @@ import "./../../src/sol/StandardToken.sol";
  */
 contract StandardTokenWrapper is StandardToken {
   /**
-   * Create new Standard Token Wrapper smart contract with given "Central Bank"
+   * Create new Standard Token Wrapper smart contract with given "token issuer"
    * account address.
    *
-   * @param _centralBank "Central Bank" account address
+   * @param _tokenIssuer "token issuer" account address
    */
-  function StandardTokenWrapper (address _centralBank)
-  StandardToken (_centralBank) {
+  function StandardTokenWrapper (address _tokenIssuer)
+  StandardToken (_tokenIssuer) {
     // Do nothing
   }
 

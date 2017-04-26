@@ -6,11 +6,11 @@ This document defines and API of Blockchain Capital Token Smart Contract.
 
 ### Signature
 
-    function BCAPToken (address _centralBank)
+    function BCAPToken (address _tokenIssuer)
 
 ### Description
 
-Deploy smart contract with given central bank address and makes central bank to be the owner of smart contract.
+Deploy smart contract with given token issuer address and makes token issuer to be the owner of smart contract.
 
 ### Use Cases
 

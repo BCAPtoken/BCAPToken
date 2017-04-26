@@ -41,8 +41,8 @@ In order to deploy Blockchain Capital Token Smart Contract do the following:
 1. Go to the directory containing deployment script, i.e. file named
    `BCAPTokenDeploy.js`.
 2. Attach to your local Ethereum node: `geth attach`
-3. Set central bank address like this:
-   `var centralBank = "0xe489665cc93a8e3286bdd70a4e513360bcb14a48";`
+3. Set token issuer address like this:
+   `var tokenIssuer = "0xe489665cc93a8e3286bdd70a4e513360bcb14a48";`
 4. Unlock your primary account:
    `personal.unlockAccount (web3.eth.accounts [0]);` (you will be
    asked for your passphrase here)

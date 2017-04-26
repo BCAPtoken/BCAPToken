@@ -74,7 +74,7 @@ tests.push ({
         test.dave = test.walletContract.at (
             web3.eth.getTransactionReceipt (test.tx3).contractAddress);
       }},
-    { name: "Alice deploys BCAPTokenWrapper contract with Bob as central bank",
+    { name: "Alice deploys BCAPTokenWrapper contract with Bob as token issuer",
       body: function (test) {
         loadScript ("target/test-solc-js/BCAPTokenWrapper.abi.js");
         var BCAPTokenWrapperABI = _;

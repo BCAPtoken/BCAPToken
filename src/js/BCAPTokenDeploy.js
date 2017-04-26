@@ -4,7 +4,7 @@
  */
 
 if (!web3.eth.contract (@ABI@).new (
-  centralBank,
+  tokenIssuer,
   {from: web3.eth.accounts[0], data: "0x@BIN@", gas: 1000000},
   function (e, r) {
     if (e) throw e;
